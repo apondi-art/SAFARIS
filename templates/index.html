@@ -5,20 +5,28 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoRide - Your Reliable Ride-Sharing Platform</title>
+    <title>Safaris - Your Reliable Drive-Sharing Platform</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        html, body {
+            height: 100%; /* Ensure html and body take full height */
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
             background-color: #f0f8ff;
             color: #333;
+        }
+
+        .wrapper {
+            display: flex; /* Use Flexbox to handle layout */
+            flex-direction: column; /* Make the wrapper a column flex container */
+            min-height: 100vh; /* Ensure the wrapper takes at least full height of viewport */
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            flex: 1; /* Allow container to grow and fill available space */
         }
 
         header {
@@ -33,14 +41,11 @@
             align-items: center;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
         .nav-links {
             list-style: none;
             display: flex;
+            font-size: 24px;
+            font-weight: bold;
         }
 
         .nav-links li {
@@ -50,7 +55,7 @@
         .nav-links a {
             color: white;
             text-decoration: none;
-        } 
+        }
 
         .hero {
             background-color: #007d9c;
@@ -111,7 +116,8 @@
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 10px 0;
+            margin-top: auto;
         }
     </style>
 </head>
@@ -120,10 +126,10 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">Safaris</div>
+                <div class="nav-links"><a href="/index.html">Safaris</a></div>
                 <ul class="nav-links">
-                    <li>Home</li>
-                    <li>Join Us</li>
+                    <li><a href="/joinus.html">Join Us</a></li>
+
                 </ul>
             </nav>
         </div>
@@ -154,11 +160,11 @@
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Safaris. All rights reserved.</p>
-        </div>
-    </footer>
+<footer>
+    <div class="foot">
+        <p>&copy; 2024 Safaris. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 
 </html>
