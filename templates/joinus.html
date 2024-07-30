@@ -12,6 +12,7 @@
             padding: 0;
             background-color: #f0f8ff;
             color: #333;
+            height: 100vh;
         }
         .container {
             max-width: 1200px;
@@ -38,6 +39,9 @@
         }
         .nav-links li {
             margin-left: 20px;
+        }
+        .nav-links:hover {
+            background-color: #008c59;
         }
         .nav-links a {
             color: white;
@@ -96,6 +100,7 @@
             text-align: center;
             padding: 20px 0;
             margin-top: 50px;
+            bottom:0;
         }
     </style>
 </head>
@@ -103,10 +108,10 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">Safaris</div>
+                <div class="logo"><a href="index">Safaris</a></div>
                 <ul class="nav-links">
-                    <li><a href="\index.htm">Home</a></li>
-                    <li><a href="\joinus.html">Join Us</a></li>
+                    <li><a href="index">Home</a></li>
+                    <li><a href="joinus">Join Us</a></li>
                 </ul>
             </nav>
         </div>
@@ -129,7 +134,7 @@
             <div class="option">
                 <h2>Ride with Us</h2>
                 <p>Sign up as a rider and enjoy safe, reliable, and affordable rides whenever you need them. Get to your destination hassle-free!</p>
-                <a  class="join-button">Sign Up as Rider</a>
+                <div  class="join-button">Sign Up as Rider</div>
             </div>
         </section>
     </main>

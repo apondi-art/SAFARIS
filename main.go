@@ -9,6 +9,12 @@ import (
 
 func main() {
 	http.HandleFunc("/", handlers.HomeHandle)
+	http.HandleFunc("/joinus", handlers.JoinusHandle)
+	http.HandleFunc("/driver", handlers.DriverHandle)
+	http.HandleFunc("/user", handlers.UserHandle)
 	fmt.Println("server successfully created")
-	http.ListenAndServe(":8080", nil)
+	err :=http.ListenAndServe(":8081", nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
