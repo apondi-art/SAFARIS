@@ -63,6 +63,19 @@ func JoinusHandle(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func BidHandle(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "method Not Allowed", http.StatusMethodNotAllowed)
+	}
+
+	err := t.ExecuteTemplate(w, "bid.html", nil)
+	if err != nil {
+		http.Error(w, "internalServer Error", http.StatusInternalServerError)
+	}
+}
+
+
+
 func DriverHandle(w http.ResponseWriter, r *http.Request) {
 	genesisDriver.Hash = SAFARIS.CalculateHash(genesisDriver.Name, genesisDriver.ID, genesisDriver.VehicleReg, genesisDriver.PhoneNumber, genesisDriver.PreviousHash)
 	if r.Method == http.MethodPost {
