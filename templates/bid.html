@@ -1,0 +1,117 @@
+<html><head><base href="https://websim.example.com/bidding-app/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Ride Bidding Platform</title><style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  .container {
+    width: 90%;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+  }
+  input[type="number"],
+  input[type="time"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #006400; /* Changed to a darker green */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #004d00; /* Darker shade for hover state */
+  }
+  .approval {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    text-align: center;
+  }
+  @media (max-width: 480px) {
+    .container {
+      width: 95%;
+      padding: 0.5rem;
+    }
+  }
+</style></head><body>
+  <div class="container">
+    <h1>Ride Bidding</h1>
+    <form id="bidForm">
+      <div class="form-group">
+        <label for="userBid">User Bid (KES):</label>
+        <input type="number" id="userBid" name="userBid" step="1" required>
+      </div>
+      <div class="form-group">
+        <label for="driverPrice">Driver Price (KES):</label>
+        <input type="number" id="driverPrice" name="driverPrice" step="1" required>
+      </div>
+      <div class="form-group">
+        <label for="departureTime">Departure Time:</label>
+        <input type="time" id="departureTime" name="departureTime" required>
+      </div>
+      <div class="form-group">
+        <label for="arrivalTime">Arrival Time:</label>
+        <input type="time" id="arrivalTime" name="arrivalTime" required>
+      </div>
+      <button type="submit">Submit Bid</button>
+    </form>
+    <div id="approval" class="approval"></div>
+  </div>
+
+  <script>
+    document.getElementById('bidForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const userBid = parseInt(document.getElementById('userBid').value);
+      const driverPrice = parseInt(document.getElementById('driverPrice').value);
+      const departureTime = document.getElementById('departureTime').value;
+      const arrivalTime = document.getElementById('arrivalTime').value;
+
+      let approvalMessage = '';
+
+      if (userBid >= driverPrice) {
+        approvalMessage = 'Bid Approved! Your ride is confirmed.';
+      } else {
+        approvalMessage = 'Bid Rejected. Please increase your bid.';
+      }
+
+      document.getElementById('approval').innerHTML = `
+        <h3>${approvalMessage}</h3>
+        <p>Departure: ${departureTime}</p>
+        <p>Arrival: ${arrivalTime}</p>
+        <p>Your Bid: ${userBid} KES</p>
+        <p>Driver's Price: ${driverPrice} KES</p>
+      `;
+    });
+  </script>
+</body></html>
