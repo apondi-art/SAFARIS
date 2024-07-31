@@ -1,117 +1,208 @@
-<html><head><base href="https://websim.example.com/bidding-app/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Ride Bidding Platform</title><style>
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  .container {
-    width: 90%;
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  h1 {
-    text-align: center;
-    color: #333;
-  }
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #666;
-  }
-  input[type="number"],
-  input[type="time"] {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  button {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #006400; /* Changed to a darker green */
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background-color: #004d00; /* Darker shade for hover state */
-  }
-  .approval {
-    margin-top: 1rem;
-    padding: 1rem;
-    background-color: #e9ecef;
-    border-radius: 4px;
-    text-align: center;
-  }
-  @media (max-width: 480px) {
-    .container {
-      width: 95%;
-      padding: 0.5rem;
-    }
-  }
-</style></head><body>
-  <div class="container">
-    <h1>Ride Bidding</h1>
-    <form id="bidForm">
-      <div class="form-group">
-        <label for="userBid">User Bid (KES):</label>
-        <input type="number" id="userBid" name="userBid" step="1" required>
-      </div>
-      <div class="form-group">
-        <label for="driverPrice">Driver Price (KES):</label>
-        <input type="number" id="driverPrice" name="driverPrice" step="1" required>
-      </div>
-      <div class="form-group">
-        <label for="departureTime">Departure Time:</label>
-        <input type="time" id="departureTime" name="departureTime" required>
-      </div>
-      <div class="form-group">
-        <label for="arrivalTime">Arrival Time:</label>
-        <input type="time" id="arrivalTime" name="arrivalTime" required>
-      </div>
-      <button type="submit">Submit Bid</button>
-    </form>
-    <div id="approval" class="approval"></div>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
 
-  <script>
-    document.getElementById('bidForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const userBid = parseInt(document.getElementById('userBid').value);
-      const driverPrice = parseInt(document.getElementById('driverPrice').value);
-      const departureTime = document.getElementById('departureTime').value;
-      const arrivalTime = document.getElementById('arrivalTime').value;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Bidding Platform</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
 
-      let approvalMessage = '';
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-      if (userBid >= driverPrice) {
-        approvalMessage = 'Bid Approved! Your ride is confirmed.';
-      } else {
-        approvalMessage = 'Bid Rejected. Please increase your bid.';
-      }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0;
+        }
 
-      document.getElementById('approval').innerHTML = `
-        <h3>${approvalMessage}</h3>
-        <p>Departure: ${departureTime}</p>
-        <p>Arrival: ${arrivalTime}</p>
-        <p>Your Bid: ${userBid} KES</p>
-        <p>Driver's Price: ${driverPrice} KES</p>
-      `;
-    });
-  </script>
-</body></html>
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .brand {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f39c12;
+        }
+
+        .hero {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #f39c12;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #e67e22;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        input[type="number"],
+        input[type="time"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #f39c12; /* Changed to a darker green */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #f39c12; /* Darker shade for hover state */
+        }
+
+        .approval {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+              <li><a href="index">Home</a></li>
+              <li><a href="joinus">Join Us</a></li>
+              <li><a href="list">Drivers</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="wrapper">
+        <section class="hero">
+            <h1>Welcome to Ride Bidding</h1>
+            <p>Bid for your rides easily and quickly</p>
+            <a href="#" class="cta-button">Get Started</a>
+        </section>
+
+        <div class="container">
+            <h1>Ride Bidding</h1>
+            <form id="bidForm">
+                <div class="form-group">
+                    <label for="userBid">User Bid (KES):</label>
+                    <input type="number" id="userBid" name="userBid" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverPrice">Driver Price (KES):</label>
+                    <input type="number" id="driverPrice" name="driverPrice" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="departureTime">Departure Time:</label>
+                    <input type="time" id="departureTime" name="departureTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="arrivalTime">Arrival Time:</label>
+                    <input type="time" id="arrivalTime" name="arrivalTime" required>
+                </div>
+                <button type="submit">Submit Bid</button>
+            </form>
+            <div id="approval" class="approval"></div>
+        </div>
+    </main>
+</body>
+
+</html>

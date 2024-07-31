@@ -16,6 +16,10 @@ type Result struct {
 	Drivers string
 }
 
+type Ride struct {
+	Details string
+}
+
 var (
 	t = template.Must(template.ParseGlob("./templates/*.html"))
 

@@ -7,20 +7,16 @@ import (
 	"time"
 )
 
-type Block struct {
-	Hash         string
-	PreviousHash string
-	Ride         Ride
-}
-
 type Ride struct {
-	DriverID      string
-	User          User
+	// DriverID      string
+	// User          User
+	Hash          string
+	PreviousHash  string
 	CustomerBid   float64
 	DriveBid      float64
 	DepartureTime time.Time
 	ArrivalTime   time.Time
-	TimeTaken     time.Duration
+	// TimeTaken     time.Duration
 }
 
 type Driver struct {
@@ -44,7 +40,7 @@ type DriverBlock struct {
 }
 
 type BlockChain struct {
-	Blocks []Block
+	Blocks []Ride
 }
 
 // Create a new driver
@@ -66,22 +62,16 @@ func (d *DriverBlock) AddDriver(name, id, regNumber, num string) {
 }
 
 // Create a new ride and add it to a block
-func AddRide(driverID string, user User, customerBid, driveBid float64, departureTime, arrivalTime time.Time) Block {
+func AddRide(customerBid, driveBid float64, departureTime, arrivalTime time.Time) Ride {
 	ride := Ride{
-		DriverID:      driverID,
-		User:          user,
 		CustomerBid:   customerBid,
 		DriveBid:      driveBid,
 		DepartureTime: departureTime,
 		ArrivalTime:   arrivalTime,
-		TimeTaken:     arrivalTime.Sub(departureTime),
 	}
 
-	block := Block{
-		Ride: ride,
-	}
-	block.Hash = CalculateHash(driverID, user.Name, user.PhoneNumber, fmt.Sprintf("%f", customerBid), fmt.Sprintf("%f", driveBid), departureTime.String(), arrivalTime.String(), fmt.Sprintf("%d", ride.TimeTaken.Milliseconds()))
-	return block
+	ride.Hash = CalculateHash(fmt.Sprintf("%f", customerBid), fmt.Sprintf("%f", driveBid), departureTime.String(), arrivalTime.String())
+	return ride
 }
 
 // Calculate hash based on concatenated parts
@@ -95,9 +85,9 @@ func CalculateHash(parts ...string) string {
 }
 
 // Add a block to the blockchain
-func (bc *BlockChain) AddBlock(block Block) {
+func (bc *BlockChain) AddRide(block Ride) {
 	block.PreviousHash = bc.getLatestBlockHash()
-	block.Hash = CalculateHash(block.Ride.DriverID, block.Ride.User.Name, block.Ride.User.PhoneNumber, fmt.Sprintf("%f", block.Ride.CustomerBid), fmt.Sprintf("%f", block.Ride.DriveBid), block.Ride.DepartureTime.String(), block.Ride.ArrivalTime.String(), fmt.Sprintf("%d", block.Ride.TimeTaken.Milliseconds()), block.PreviousHash)
+	block.Hash = CalculateHash(fmt.Sprintf("%f", block.CustomerBid), fmt.Sprintf("%f", block.DriveBid), block.DepartureTime.String(), block.ArrivalTime.String(), block.PreviousHash)
 	bc.Blocks = append(bc.Blocks, block)
 }
 
