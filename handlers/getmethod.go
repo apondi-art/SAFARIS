@@ -61,24 +61,26 @@ func JoinusHandle(w http.ResponseWriter, r *http.Request) {
 
 func DriverHandle(w http.ResponseWriter, r *http.Request) {
 	genesisDriver.Hash = SAFARIS.CalculateHash(genesisDriver.Name, genesisDriver.ID, genesisDriver.VehicleReg, genesisDriver.PhoneNumber, genesisDriver.PreviousHash)
-	if r.Method != http.MethodGet {
-		http.Error(w, "method Not Allowed", http.StatusMethodNotAllowed)
+	if r.Method == http.MethodPost {
+		if err := r.ParseForm(); err != nil {
+			fmt.Println(err)
+			return
+		}
+		name := r.Form.Get("full-name")
+		fmt.Println(name)
+		number := r.Form.Get("phone")
+		id := r.Form.Get("id-number")
+		plate := r.Form.Get("vehicle-plate")
+
+		// Add driver to the DriverBlock
+		Drivers.AddDriver(name, id, plate, number)
+
+		SaveDrivers()
+
+		if err := t.ExecuteTemplate(w, "driver.html", nil); err != nil {
+			fmt.Println(err)
+		}
 	}
-	if err := r.ParseForm(); err != nil {
-		fmt.Println(err)
-		return
-	}
-	name := r.Form.Get("full-name")
-	fmt.Println(name)
-	number := r.Form.Get("phone")
-	id := r.Form.Get("id-number")
-	plate := r.Form.Get("vehicle-plate")
-
-	// Add driver to the DriverBlock
-	Drivers.AddDriver(name, id, plate, number)
-
-	SaveDrivers()
-
 	if err := t.ExecuteTemplate(w, "driver.html", nil); err != nil {
 		fmt.Println(err)
 	}
@@ -92,10 +94,10 @@ func ListHandler(w http.ResponseWriter, r *http.Request) {
 		var name, phone, car string
 		var drivers []string
 		for i, block := range Drivers.Drivers {
-			name += (fmt.Sprintf("Driver %d:\n", i+1))
-			name += (fmt.Sprintf("Name: %s\n", block.Name))
-			phone += (fmt.Sprintf("Phone Number: %s\n", block.PhoneNumber))
-			car += fmt.Sprintf("Vehicle Registration: %s\n", block.VehicleReg)
+			name += (fmt.Sprintf("Driver	%d:		", i+1))
+			name += (fmt.Sprintf("Name:	%s		", block.Name))
+			phone += (fmt.Sprintf("Phone Number:	%s		", block.PhoneNumber))
+			car += fmt.Sprintf("Vehicle Registration:	%s		", block.VehicleReg)
 			car += ("\n") // Adding extra newline for better readability
 			drivers = append(drivers, name+" "+phone+" "+car+"\r\n")
 			name, car, phone = "", "", ""
