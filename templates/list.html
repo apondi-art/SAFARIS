@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Us - Safaris</title>
+    <title>Driver List - Safaris</title>
     <style>
         html, body {
             height: 100%;
@@ -81,53 +81,64 @@
             margin-bottom: 20px;
         }
 
-        .options {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .option {
+        .form-container {
             background-color: white;
             border-radius: 10px;
             padding: 30px;
-            text-align: center;
-            width: 40%;
+            margin-top: 50px;
+            max-width: 700px;
+            margin: 0 auto;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+        }
+
+        .form-group {
             margin-bottom: 20px;
         }
 
-        .option:hover {
-            transform: translateY(-10px);
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
         }
 
-        .option h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .option p {
-            margin-bottom: 30px;
-            color: #7f8c8d;
-        }
-
-        .join-button a {
-            display: inline-block;
-            background-color: #f39c12;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
+        .dropdown {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
-            transition: background-color 0.3s;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
         }
 
-        .join-button a:hover {
-            background-color: #e67e22;
+        .table-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
         }
 
         footer {
@@ -135,7 +146,7 @@
             color: white;
             text-align: center;
             padding: 20px 0;
-            margin-top: 50px;
+            margin-top: auto;
         }
     </style>
 </head>
@@ -157,27 +168,41 @@
     <main class="wrapper">
         <section class="hero">
             <div class="container">
-                <h1>Join Safaris Today</h1>
-                <p>Choose how you want to be part of our community</p>
+                <h1>Driver List</h1>
+                <p>View available drivers from Kibuye to Gikomba</p>
             </div>
         </section>
 
-        <section class="options">
-            <div class="option">
-                <h2>Become a Driver</h2>
-                <p>Start earning money by driving on your own schedule. Be your own boss and enjoy the flexibility of choosing when and where to drive.</p>
-                <div class="join-button"><a href="driver">Sign Up as Driver</a></div>
+        <section class="container">
+            <div class="form-container">
+                <form id="journey-form">
+                    <div class="form-group">
+                        <label for="from">From</label>
+                        <select id="from" class="dropdown" disabled>
+                            <option value="Gikomba" selected>Gikomba</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="to">To</label>
+                        <select id="to" class="dropdown" disabled>
+                            <option value="Kibuye" selected>Kibuye</option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div class="option">
-                <h2>Ride with Us</h2>
-                <p>Sign up as a rider and enjoy safe, reliable, and affordable rides whenever you need them. Get to your destination hassle-free!</p>
-                <div class="join-button"><a href="user">Sign Up as Customer</a></div>
-            </div>
+        </section>
+
+        <section class="table-container">
+            <pre>
+                {{.Drivers}}
+            </pre>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Safaris. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 Safaris. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 

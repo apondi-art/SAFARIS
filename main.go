@@ -12,6 +12,7 @@ func main() {
 	http.HandleFunc("/joinus", handlers.JoinusHandle)
 	http.HandleFunc("/driver", handlers.DriverHandle)
 	http.HandleFunc("/user", handlers.UserHandle)
+	http.HandleFunc("/list", handlers.ListHandler)
 	fmt.Println("server successfully created")
 	err := http.ListenAndServe(":8081", nil)
 	if err != nil {
